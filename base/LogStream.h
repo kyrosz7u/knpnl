@@ -56,19 +56,21 @@ public:
     LogStream& operator<<(const char* str)
     {
         if (str)
-        {
             mBuffer.append(str, strlen(str));
-        }
         else
-        {
             mBuffer.append("(null)", 6);
-        }
+
         return *this;
     }
 
     LogStream& operator<<(const string& v)
     {
         mBuffer.append(v.c_str(), v.size());
+        return *this;
+    }
+
+    LogStream& operator<<(StringPiece &str){
+        mBuffer.append(str.data(),str.size());
         return *this;
     }
 

@@ -130,7 +130,8 @@ void TcpConnection::Established()
     mLoop->AddChannel(mChannel.get());
     mChannel->EnableRead();
     if(onConnectCallback){
-        onConnectCallback(shared_from_this());
+        TcpConnPtr guard(shared_from_this());
+        onConnectCallback(guard);
     }
 }
 

@@ -3,11 +3,18 @@
 //
 
 #include "FileSystem.h"
-
 #include <memory>
 
 using namespace base;
-FileSystem::FILE_STATE FileSystem::Open(const StringPiece &path){
+
+map<FILE_STATE,StringPiece> file_state_str={
+        {IS_FILE, "IS_FILE"},
+        {IS_DIR, "IS_DIR"},
+        {NO_FILE, "NO_FILE"},
+        {CANNOT_ACCESS, "CANNOT_ACCESS"}
+};
+
+FILE_STATE FileSystem::Open(const StringPiece &path){
     mPath=path;
     if(stat(mPath.data(),&mFileStat)){
         return NO_FILE;
@@ -21,7 +28,7 @@ FileSystem::FILE_STATE FileSystem::Open(const StringPiece &path){
     mFileLength = mFileStat.st_size;
 
     int fd = open(mPath.data(), O_RDONLY);
-    mFile = std::make_shared<FileAddr>(fd, mFileLength);
+    mFile = shared_ptr<FileAddr>(new FileAddr(fd, mFileLength));
     close(fd);
     return IS_FILE;
 }

@@ -44,7 +44,7 @@ public:
     void setContentLength(const int &len){ ContentLength=len;}
     void setContentType(const string& ContentType){ Headers["Content-Type"] = ContentType; }
     void setBody(const string& ResponseBody){ Body=ResponseBody;}
-    FileSystem::FILE_STATE openFile(const StringPiece &path);
+    FILE_STATE openFile(const StringPiece &path);
     bool hasFile(){ return !(mFile.getAddr() == nullptr); }
     FileSystem& getFile(){ return mFile; }
     void appendToBuffer(FixedBuffer *Buffer);

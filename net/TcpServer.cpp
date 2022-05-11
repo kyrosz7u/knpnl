@@ -45,9 +45,9 @@ void TcpServer::Close(const TcpConnPtr &conn)
     assert(it!=connMap.end());
 
     EventLoop *ioLoop = conn->getLoop();
-    connMap.erase(connfd);
     LOG_TRACE << "close connection: " << connfd;
     ioLoop->QueueInLoop(std::bind(&TcpConnection::handleClose, conn));
+    LOG_TRACE << "conn use count: " << conn.use_count();
 }
 
 void TcpServer::newConnection(int connfd, sockaddr_in addr)
@@ -57,27 +57,34 @@ void TcpServer::newConnection(int connfd, sockaddr_in addr)
     TcpConnPtr conn(new TcpConnection(connfd, ioLoop));
     LOG_TRACE << "new connection: " << connfd;
     connMap[connfd] = conn;
+
     conn->SetOnConnectCallback(onConnectCallback);
     conn->SetOnMessageCallback(onMessageCallback);
     conn->SetWriteCompleteCallback(writeCompleteCallback);
     conn->SetCloseCallback(std::bind(&TcpServer::removeConnection,this,_1));
+
     ioLoop->RunInLoop(std::bind(&TcpConnection::Established,conn));
+    LOG_TRACE << "conn use count: " << conn.use_count();
 }
 
 void TcpServer::removeConnection(const TcpConnPtr &conn)
 {
     mLoop->RunInLoop(std::bind(&TcpServer::removeInLoop, this, conn));
+    LOG_TRACE << "conn use count: " << conn.use_count();
 }
 void TcpServer::removeInLoop(const TcpConnPtr &conn)
 {
     mLoop->AssertInLoop();  // 保证connMap不会出现线程安全问题
     EventLoop *ioLoop = conn->getLoop();
     int connfd = conn->getSocketFd();
-    connMap.erase(connfd);
+    size_t sz = connMap.erase(connfd);
+    assert(sz==1);
+
     LOG_TRACE << "remove connection: " << connfd;
     /* 这里用queueInLoop是为了保证当mLoop和ioLoop相同的时候，
      * Tcp连接的剩余IO事件能被处理，相当于慢关闭*/
     ioLoop->QueueInLoop(std::bind(&TcpConnection::Destroy, conn));
+    LOG_TRACE << "conn use count: " << conn.use_count();
 }
 
 void AddrToString(const sockaddr_in &addr)

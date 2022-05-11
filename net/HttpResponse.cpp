@@ -49,13 +49,13 @@ void HttpResponse::appendToBuffer(FixedBuffer *Buffer) {
 }
 
 
-FileSystem::FILE_STATE HttpResponse::openFile(const StringPiece &path) {
-    FileSystem::FILE_STATE ret = mFile.Open(path);
-    if (ret == FileSystem::FILE_STATE::IS_FILE) {
+FILE_STATE HttpResponse::openFile(const StringPiece &path) {
+    FILE_STATE ret = mFile.Open(path);
+    if (ret == FILE_STATE::IS_FILE) {
         ContentLength = mFile.getLength();
-    }else if(ret == FileSystem::FILE_STATE::CANNOT_ACCESS){
+    }else if(ret == FILE_STATE::CANNOT_ACCESS){
         mStatusCode = CLIENT_ERROR_FORBIDDEN;
-    }else if(ret == FileSystem::FILE_STATE::NO_FILE){
+    }else if(ret == FILE_STATE::NO_FILE){
         mStatusCode = CLIENT_ERROR_NOT_FOUND;
     }
     mStatusCode = CLIENT_ERROR_BAD_REQUEST;

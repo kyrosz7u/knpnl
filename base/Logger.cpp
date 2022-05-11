@@ -38,7 +38,7 @@ Logger::Logger(FileName file, int line, enum LogLevel level, const char *func) {
     mStream <<" ["<< LogLevelName[level];
     mStream <<"] "<< file.get();
     mStream << " line:" << line<<" ";
-//    mStream << " func:" << func<<" ";
+    mStream << " func:" << func<<" ";
 }
 
 }//namespace base
