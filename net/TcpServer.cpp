@@ -63,6 +63,7 @@ void TcpServer::newConnection(int connfd, sockaddr_in addr)
     conn->SetWriteCompleteCallback(writeCompleteCallback);
     conn->SetCloseCallback(std::bind(&TcpServer::removeConnection,this,_1));
 
+    conn->mState = CONNECTING;
     ioLoop->RunInLoop(std::bind(&TcpConnection::Established,conn));
     LOG_TRACE << "conn use count: " << conn.use_count();
 }

@@ -27,6 +27,8 @@ TcpConnection::TcpConnection(int connfd, EventLoop *loop)
     mChannel->SetReadCallback(std::bind(&TcpConnection::handleRead, this));
     mChannel->SetWriteCallback(std::bind(&TcpConnection::handleWrite, this));
     mChannel->SetCloseCallback(std::bind(&TcpConnection::handleClose, this));
+
+    memset(&m_iv, 0, sizeof m_iv);  // 将iovec清零
 }
 
 TcpConnection::~TcpConnection()
@@ -69,6 +71,8 @@ void TcpConnection::sendInLoop()
     }
 }
 
+/* 先关闭写端，等待收到对端发送的FIN，
+ * 然后recvMessage返回0，由handleRead执行关闭操作*/
 void TcpConnection::closeInLoop()
 {
     mSocket.shutdownWrite();
@@ -115,10 +119,14 @@ void TcpConnection::handleWrite()
 void TcpConnection::handleClose()
 {
     LOG_TRACE << "handleClose: ";
-    mLoop->AssertInLoop();  // 操作Channel之前要保证在对应的线程
-    mChannel->DisableAll(); // 这里停止发送和接收
-    TcpConnPtr guard(shared_from_this());
-    closeCallback(guard);
+    if(mState==CONNECTING||mState==CONNECTED){
+        mState = CLOSING;
+        mLoop->AssertInLoop();  // 操作Channel之前要保证在对应的线程
+        mChannel->DisableAll(); // 这里停止发送和接收
+        TcpConnPtr guard(shared_from_this());
+        closeCallback(guard);
+    }
+
 }
 
 /* 处理连接创建后的初始化工作
@@ -133,6 +141,7 @@ void TcpConnection::Established()
         TcpConnPtr guard(shared_from_this());
         onConnectCallback(guard);
     }
+    mState = CONNECTED;
 }
 
 /* 将channel从Poller中去除，避免造成内存泄露*/
@@ -141,6 +150,7 @@ void TcpConnection::Destroy()
     LOG_TRACE << "Destroy: ";
     assert(mChannel->isIdle());
     mChannel->Remove();
+    mState = CLOSED;
 }
 
 /*读取收到的数据，并存入mReadBuffer*/
@@ -182,10 +192,10 @@ long int TcpConnection::sendMessage() {
             return mWriteBuffer.used() + m_iv[1].iov_len;
         }
         LOG_ERROR << "errno"<<sys_errlist[errno];
-        LOG_ERROR<<"m_iv[0] addr: "<<m_iv[0].iov_base;
-        LOG_ERROR<<"m_iv[0] len: "<<m_iv[0].iov_len;
-        LOG_ERROR<<"m_iv[1] addr: "<<m_iv[1].iov_base;
-        LOG_ERROR<<"m_iv[1] len: "<<m_iv[1].iov_len;
+//        LOG_ERROR<<"m_iv[0] addr: "<<m_iv[0].iov_base;
+//        LOG_ERROR<<"m_iv[0] len: "<<m_iv[0].iov_len;
+//        LOG_ERROR<<"m_iv[1] addr: "<<m_iv[1].iov_base;
+//        LOG_ERROR<<"m_iv[1] len: "<<m_iv[1].iov_len;
     }
     m_iv[1].iov_base= nullptr;
     m_iv[1].iov_len= 0;

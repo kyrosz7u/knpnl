@@ -7,12 +7,14 @@
 
 using namespace base;
 
-map<FILE_STATE,StringPiece> file_state_str={
-        {IS_FILE, "IS_FILE"},
-        {IS_DIR, "IS_DIR"},
-        {NO_FILE, "NO_FILE"},
+namespace base {
+map<FILE_STATE, StringPiece> file_state_str = {
+        {IS_FILE,       "IS_FILE"},
+        {IS_DIR,        "IS_DIR"},
+        {NO_FILE,       "NO_FILE"},
         {CANNOT_ACCESS, "CANNOT_ACCESS"}
 };
+}
 
 FILE_STATE FileSystem::Open(const StringPiece &path){
     mPath=path;

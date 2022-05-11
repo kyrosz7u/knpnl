@@ -44,11 +44,11 @@ void HttpServer::readCb(const TcpConnPtr &conn,
 
     HTTP_CODE ret= req->processRead(readBuffer);
     if(ret==NO_REQUEST){
-        LOG_TRACE << "NO_REQUEST" << conn->getSocketFd();
+        LOG_TRACE << "NO_REQUEST " << conn->getSocketFd();
         return ;
     }
     else if(ret==BAD_REQUEST){
-        LOG_TRACE << "BAD_REQUEST" << conn->getSocketFd();
+        LOG_TRACE << "BAD_REQUEST " << conn->getSocketFd();
         resp.setStatusCode(HttpResponse::CLIENT_ERROR_BAD_REQUEST);
         conn->SetAlive(false);
         resp.appendToBuffer(writeBuffer);

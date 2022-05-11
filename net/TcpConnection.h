@@ -25,6 +25,14 @@ using namespace event;
 
 
 namespace net {
+// 定义连接的状态
+enum CONNECTION_STATE{
+    CONNECTING,
+    CONNECTED,
+    CLOSING,
+    CLOSED,
+};
+
 // 类型前向声明
 class TcpConnection;
 class Socket;
@@ -58,6 +66,7 @@ public:
 
     EventLoop* getLoop(){ return mLoop; }
     int getSocketFd(){ return mSocket.Fd(); }
+//    void SetState(CONNECTION_STATE state){ mState = state; }
 
     void Send();
     void Close();
@@ -84,6 +93,7 @@ private:
     Socket mSocket;
     shared_ptr<Channel> mChannel;
     bool mAlive;
+    CONNECTION_STATE mState;
     FixedBuffer mReadBuffer;
     FixedBuffer mWriteBuffer;
     boost::any mContext;

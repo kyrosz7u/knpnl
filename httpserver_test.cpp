@@ -20,7 +20,9 @@ int main(){
 
 void ServerHttp(const HttpRequest *req, HttpResponse &resp){
     if(req->url=="/133"){
-        resp.openFile("/home/xy/ClionDeploy/root/log.html");
+        FILE_STATE ret = resp.openFile("/home/xy/ClionDeploy/root/log.html");
+        if(ret!=IS_FILE)
+            LOG_ERROR << ret;
         resp.setContentType("text/html");
         resp.isAlive = false;
     }
