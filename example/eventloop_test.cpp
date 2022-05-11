@@ -30,7 +30,11 @@ int main()
     TimerChannel.SetReadCallback(std::bind(readTimerfd, timerfd));
 
     resetTimerfd(timerfd, Timestamp::now().addTime(0.8));
+
+    loop.AddChannel(&TimerChannel);
+
     TimerChannel.EnableRead();
+
     loop.Loop();
     return 0;
 }

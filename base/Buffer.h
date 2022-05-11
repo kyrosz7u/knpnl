@@ -2,8 +2,8 @@
 // Created by 樱吹雪 on 2022/4/15.
 //
 
-#ifndef KYROSWEBSERVER_FIXEDBUFFER_H
-#define KYROSWEBSERVER_FIXEDBUFFER_H
+#ifndef KHPNL_FIXEDBUFFER_H
+#define KHPNL_FIXEDBUFFER_H
 
 #include "Copyable.h"
 #include "StringPiece.h"
@@ -51,7 +51,7 @@ public:
     int append(const char *str, size_t len);
 //    int append(const char str[]);
 //    int append(std::string &str);
-    int readFd(int fd);
+    long int readFd(int fd);
 
     inline const char *readPtr() { return mReadPtr;}
     inline const char *start() { return _buf; }
@@ -103,4 +103,4 @@ private:
 };
 }//namespace base
 
-#endif //KYROSWEBSERVER_FIXEDBUFFER_H
+#endif //KHPNL_FIXEDBUFFER_H

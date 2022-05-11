@@ -25,11 +25,13 @@ EventLoop::EventLoop()
     mTimerFd=mTimers->GetTimerFd();
     mTimerCh.reset(new Channel(mTimerFd,this));
     mTimerCh->SetReadCallback(std::bind(&TimerQueue::handleRead,mTimers.get()));
+    AddChannel(mTimerCh.get());
     mTimerCh->EnableRead();
 
     mWakeupFd = createEventfd();
     mWakeupCh.reset(new Channel(mWakeupFd,this));
     mWakeupCh->SetReadCallback(std::bind(&EventLoop::wakeupRead, this));
+    AddChannel(mWakeupCh.get());
     mWakeupCh->EnableRead();
 
     isWakeup = false;
@@ -55,8 +57,8 @@ void EventLoop::Loop(){
         for(Channel* ch :activeChannel){
             ch->HandleEvent();
         }
-        if(!mTasks.empty())
-            doTask();
+
+        doTask();
     }
 }
 

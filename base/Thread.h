@@ -2,8 +2,8 @@
 // Created by 樱吹雪 on 2022/1/11.
 //
 
-#ifndef KYROSWEBSERVER_TREAD_H
-#define KYROSWEBSERVER_TREAD_H
+#ifndef KHPNL_TREAD_H
+#define KHPNL_TREAD_H
 
 #include "Copyable.h"
 #include "Types.h"

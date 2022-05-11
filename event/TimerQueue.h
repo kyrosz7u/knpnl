@@ -2,8 +2,8 @@
 // Created by 樱吹雪 on 2022/5/4.
 //
 
-#ifndef KYROSWEBSERVER_TIMERQUEUE_H
-#define KYROSWEBSERVER_TIMERQUEUE_H
+#ifndef KHPNL_TIMERQUEUE_H
+#define KHPNL_TIMERQUEUE_H
 
 #include "EventLoop.h"
 #include "Timer.h"
@@ -70,4 +70,4 @@ private:
 };
 }//namespace event
 
-#endif //KYROSWEBSERVER_TIMERQUEUE_H
+#endif //KHPNL_TIMERQUEUE_H

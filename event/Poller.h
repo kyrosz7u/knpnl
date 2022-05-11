@@ -2,29 +2,26 @@
 // Created by 樱吹雪 on 2022/5/3.
 //
 
-#ifndef KYROSWEBSERVER_POLLER_H
-#define KYROSWEBSERVER_POLLER_H
+#ifndef KHPNL_POLLER_H
+#define KHPNL_POLLER_H
 
-#include "EventLoop.h"
-#include "Channel.h"
 #include <sys/epoll.h>
 #include <vector>
 #include <map>
 
+using namespace std;
+
 namespace event {
+
+class EventLoop;
+class Channel;
 #define MAX_EVENT_NUM 1000
+
+typedef std::vector<Channel *> ChannelList;
 class Poller {
 public:
-    Poller(EventLoop* loop)
-    :mLoop(loop)
-    {
-        mEpollFd=epoll_create(5);
-        eventList.resize(MAX_EVENT_NUM);
-    }
-    ~Poller()
-    {
-        close(mEpollFd);
-    }
+    Poller(EventLoop* loop);
+    ~Poller();
     void Mod(Channel *channel, uint32_t op);
     void Add(Channel *channel);
     void Delete(Channel *channel);
@@ -39,4 +36,4 @@ private:
 };
 }//namespace event
 
-#endif //KYROSWEBSERVER_POLLER_H
+#endif //KHPNL_POLLER_H

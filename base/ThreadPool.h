@@ -2,8 +2,8 @@
 // Created by 樱吹雪 on 2022/1/16.
 //
 
-#ifndef KYROSWEBSERVER_THREADPOOL_H
-#define KYROSWEBSERVER_THREADPOOL_H
+#ifndef KHPNL_THREADPOOL_H
+#define KHPNL_THREADPOOL_H
 
 #include "Thread.h"
 #include "Condition.h"

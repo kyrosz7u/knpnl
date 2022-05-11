@@ -2,8 +2,8 @@
 // Created by 樱吹雪 on 2022/5/3.
 //
 
-#ifndef KYROSWEBSERVER_EVENT_EVENTLOOP_H
-#define KYROSWEBSERVER_EVENT_EVENTLOOP_H
+#ifndef KHPNL_EVENT_EVENTLOOP_H
+#define KHPNL_EVENT_EVENTLOOP_H
 
 #include "Types.h"
 
@@ -20,11 +20,9 @@ using namespace std;
 using namespace base;
 
 namespace event {
-
 class Channel;
 class Poller;
 class TimerQueue;
-
 int createEventfd();
 
 class EventLoop {
@@ -85,4 +83,4 @@ private:
 };
 }//namespace event
 
-#endif //KYROSWEBSERVER_EVENTLOOP_H
+#endif //KHPNL_EVENTLOOP_H

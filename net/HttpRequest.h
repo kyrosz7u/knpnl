@@ -1,8 +1,8 @@
 //
 // Created by 樱吹雪 on 2022/4/25.
 //
-#ifndef KYROSWEBSERVER_HTTPREQUEST_H
-#define KYROSWEBSERVER_HTTPREQUEST_H
+#ifndef KHPNL_HTTPREQUEST_H
+#define KHPNL_HTTPREQUEST_H
 
 #include "base/Buffer.h"
 #include <string>
@@ -54,7 +54,7 @@ public:
         mLineState = LINE_OPEN;
     }
 
-    HTTP_CODE processRead(FixedBuffer &buf);
+    HTTP_CODE processRead(FixedBuffer *buf);
     CHECK_STATE getCheckState() { return mCheckState; }
     LINE_STATE getLineState() { return mLineState; }
     unsigned int getCheckIndex() { return mCheckIndex; }

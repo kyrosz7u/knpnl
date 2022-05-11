@@ -2,8 +2,8 @@
 // Created by 樱吹雪 on 2022/2/3.
 //
 
-#ifndef KYROSWEBSERVER_TIMESTAMP_H
-#define KYROSWEBSERVER_TIMESTAMP_H
+#ifndef KHPNL_TIMESTAMP_H
+#define KHPNL_TIMESTAMP_H
 #include "Copyable.h"
 #include <string>
 
@@ -53,4 +53,4 @@ inline bool operator<(const Timestamp a, const Timestamp b){ return a.GetMicroSe
 
 
 }//namespace base
-#endif //KYROSWEBSERVER_TIMESTAMP_H
+#endif //KHPNL_TIMESTAMP_H

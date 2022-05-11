@@ -1,5 +1,5 @@
-#ifndef KYROSWEBSERVER_LOGSTREAM_H
-#define KYROSWEBSERVER_LOGSTREAM_H
+#ifndef KHPNL_LOGSTREAM_H
+#define KHPNL_LOGSTREAM_H
 
 #include "Copyable.h"
 #include "Buffer.h"

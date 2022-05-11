@@ -7,11 +7,11 @@
 
 using namespace net::http;
 
-HTTP_CODE HttpRequest::processRead(FixedBuffer &buf){
+HTTP_CODE HttpRequest::processRead(FixedBuffer *buf){
     HTTP_CODE ret=NO_REQUEST;
-    while(buf.used()>0){
-        char* readptr = const_cast<char*>(buf.readPtr());
-        mLineState = parseLine(readptr, buf.used());
+    while(buf->used()>0){
+        char* readptr = const_cast<char*>(buf->readPtr());
+        mLineState = parseLine(readptr, buf->used());
         if(mLineState == LINE_OPEN&&mCheckState!=CHECK_STATE_BODY){
             break;;
         }else if(mLineState == LINE_BAD){
@@ -25,7 +25,7 @@ HTTP_CODE HttpRequest::processRead(FixedBuffer &buf){
                 if (ret == BAD_REQUEST) {
                     return BAD_REQUEST;
                 }
-                buf.readPtrMove(mCheckIndex);
+                buf->readPtrMove(mCheckIndex);
                 mCheckIndex=0;
                 break;
             }
@@ -35,7 +35,7 @@ HTTP_CODE HttpRequest::processRead(FixedBuffer &buf){
                 if (ret == BAD_REQUEST){
                     return ret;
                 }
-                buf.readPtrMove(mCheckIndex);
+                buf->readPtrMove(mCheckIndex);
                 mCheckIndex=0;
                 if(ret==GET_REQUEST){
                     return GET_REQUEST;

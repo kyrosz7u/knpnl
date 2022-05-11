@@ -2,8 +2,8 @@
 // Created by 樱吹雪 on 2022/4/2.
 //
 
-#ifndef KYROSWEBSERVER_SINGLETON_H
-#define KYROSWEBSERVER_SINGLETON_H
+#ifndef KHPNL_SINGLETON_H
+#define KHPNL_SINGLETON_H
 
 #include <assert.h>
 
@@ -29,4 +29,4 @@ private:
 template<class T>
 Singleton<T>::_instance = nullptr;
 
-#endif //KYROSWEBSERVER_SINGLETON_H
+#endif //KHPNL_SINGLETON_H

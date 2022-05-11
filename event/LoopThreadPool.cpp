@@ -9,6 +9,7 @@ using namespace event;
 
 LoopThreadPool::LoopThreadPool(int nums)
 {
+    assert(nums > 0);
     mThreadNums = nums;
     mLoopList.resize(nums);
     for (int i = 0; i < nums; ++i) {
@@ -29,7 +30,7 @@ EventLoop* LoopThreadPool::getNextLoop()
     if(index>=mThreadNums){
         index=0;
     }
-    return mLoopList[index]->GetLoop();
+    return mLoopList[index++]->GetLoop();
 }
 
 

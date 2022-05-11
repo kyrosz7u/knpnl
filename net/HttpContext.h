@@ -3,7 +3,7 @@
 //
 #pragma once
 
-#include "Connection.h"
+#include "TcpConnection.h"
 #include "HttpRequest.h"
 #include "HttpResponse.h"
 #include "base/Buffer.h"

@@ -2,8 +2,8 @@
 // Created by 樱吹雪 on 2022/5/7.
 //
 
-#ifndef KYROSWEBSERVER_LOOPTHREADPOOL_H
-#define KYROSWEBSERVER_LOOPTHREADPOOL_H
+#ifndef KHPNL_LOOPTHREADPOOL_H
+#define KHPNL_LOOPTHREADPOOL_H
 
 #include "LoopThread.h"
 
@@ -28,4 +28,4 @@ private:
 };
 }// namespace event
 
-#endif //KYROSWEBSERVER_LOOPTHREADPOOL_H
+#endif //KHPNL_LOOPTHREADPOOL_H

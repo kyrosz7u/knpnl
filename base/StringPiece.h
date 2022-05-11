@@ -38,8 +38,8 @@
 // Arghh!  I wish C++ literals were automatically of type "string".
 
 
-#ifndef KYROSWEBSERVER_STRINGPIECE_H
-#define KYROSWEBSERVER_STRINGPIECE_H
+#ifndef KHPNL_STRINGPIECE_H
+#define KHPNL_STRINGPIECE_H
 
 #include "Copyable.h"
 #include <string.h>
@@ -189,4 +189,4 @@ template<> struct __type_traits<muduo::StringPiece> {
 // allow StringPiece to be logged
 std::ostream& operator<<(std::ostream& o, const base::StringPiece& piece);
 
-#endif //KYROSWEBSERVER_STRINGPIECE_H
+#endif //KHPNL_STRINGPIECE_H

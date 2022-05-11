@@ -1,8 +1,8 @@
 //
 // Created by 樱吹雪 on 2022/2/2.
 //
-#ifndef KYROSWEBSERVER_COPYABLE_H
-#define KYROSWEBSERVER_COPYABLE_H
+#ifndef KHPNL_COPYABLE_H
+#define KHPNL_COPYABLE_H
 
 //类型库
 #include <stdint.h>

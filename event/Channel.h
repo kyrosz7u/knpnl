@@ -2,13 +2,17 @@
 // Created by 樱吹雪 on 2022/5/3.
 //
 
-#ifndef KYROSWEBSERVER_CHANNEL_H
-#define KYROSWEBSERVER_CHANNEL_H
+#ifndef KHPNL_CHANNEL_H
+#define KHPNL_CHANNEL_H
 
 #include "base/Copyable.h"
 #include "Types.h"
 #include <sys/epoll.h>
 #include <assert.h>
+
+/* 功能和需求
+ * 1、将文件描述符和事件封装在一起
+ * 2、提供事件处理回调函数给Poller调用*/
 
 namespace event {
 class EventLoop;
@@ -52,9 +56,17 @@ private:
     bool isInLoop;
     uint32_t rEvent;
     uint32_t mEvent;
+    weak_ptr<void> mGuardPtr;
+    bool isGuarded;
     EventLoop *mLoop;
     int mFd;
+
+    void Guard(const shared_ptr<void> &sp);
+
+    void UnGuard();
+
+    void HandleEventWithGuard();
 };
 }//namespace event
 
-#endif //KYROSWEBSERVER_CHANNEL_H
+#endif //KHPNL_CHANNEL_H

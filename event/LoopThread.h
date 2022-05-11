@@ -2,8 +2,8 @@
 // Created by 樱吹雪 on 2022/5/7.
 //
 
-#ifndef KYROSWEBSERVER_LOOPTHREAD_H
-#define KYROSWEBSERVER_LOOPTHREAD_H
+#ifndef KHPNL_LOOPTHREAD_H
+#define KHPNL_LOOPTHREAD_H
 
 #include "EventLoop.h"
 #include "base/Thread.h"
@@ -13,7 +13,8 @@ using namespace base;
 using namespace event;
 
 namespace event {
-// 单个Loop线程
+/* 包含Loop线程的实现
+ * 为了安全不允许在外部访问父类成员函数   */
 class LoopThread : protected Thread {
 public:
     LoopThread()
@@ -25,6 +26,8 @@ public:
         Thread::start();
     }
 
+    /* 在对象析构后才会尝试终止线程
+     * 线程退出之前要让loop执行完任务    */
     ~LoopThread()
     {
         mLoop->Quit();
@@ -44,4 +47,4 @@ private:
 };
 }//namespace event
 
-#endif //KYROSWEBSERVER_LOOPTHREAD_H
+#endif //KHPNL_LOOPTHREAD_H

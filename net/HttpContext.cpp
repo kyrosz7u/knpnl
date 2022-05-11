@@ -9,14 +9,14 @@
 namespace net{
 namespace http{
 
-bool HttpContext::parseRequest(FixedBuffer& Buffer){
-    HTTP_CODE ret = Request.processRead(Buffer);
-    if(ret==GET_REQUEST||ret==NO_REQUEST){
-        return true;
-    }else{
-        return false;
-    }
-}
+//bool HttpContext::parseRequest(FixedBuffer& Buffer){
+//    HTTP_CODE ret = Request.processRead(Buffer);
+//    if(ret==GET_REQUEST||ret==NO_REQUEST){
+//        return true;
+//    }else{
+//        return false;
+//    }
+//}
 
 }//namespace http
 }//namespace net

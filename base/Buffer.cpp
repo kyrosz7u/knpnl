@@ -46,12 +46,11 @@ int FixedBuffer::append(const char &ch)
 }
 
 /*读取socketfd到buffer*/
-int FixedBuffer::readFd(int socketfd)
+long int FixedBuffer::readFd(int socketfd)
 {
     if(avail()==0){
         return 0;
     }
-
     int read_bytes;
     size_t last_used=used();
     while(avail()>0){

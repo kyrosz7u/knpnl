@@ -12,7 +12,7 @@ void task(EventLoop* loop)
     i++;
     assert(CurrentThread::Tid==loop->getTid());
 
-    if(i%1000==0)
+    if(i%1000)
         LOG_INFO<<"i = "<<i;
 }
 
@@ -26,7 +26,7 @@ int main()
     {
         EventLoop *loop=threadpool.getNextLoop();
         loop->RunInLoop(std::bind(task, loop));
-        usleep(1000);
+        usleep(300000);
     }
 
     return 0;

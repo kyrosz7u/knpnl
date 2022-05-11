@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(KyrosWebServer)
+project(KHPNL)
 
 SET(CMAKE_BUILD_TYPE "Debug")
 
@@ -16,6 +16,9 @@ add_subdirectory(event)
 add_subdirectory(net)
 add_subdirectory(example)
 add_subdirectory(unittest)
+
+add_executable(httpserver_test httpserver_test.cpp)
+target_link_libraries(httpserver_test http)
 
 
 

@@ -2,8 +2,8 @@
 // Created by 樱吹雪 on 2022/5/4.
 //
 
-#ifndef KYROSWEBSERVER_TIMER_H
-#define KYROSWEBSERVER_TIMER_H
+#ifndef KHPNL_TIMER_H
+#define KHPNL_TIMER_H
 
 #include "base/Timestamp.h"
 #include "base/Copyable.h"
@@ -44,4 +44,4 @@ private:
 // atomic<Timer_t> Timer::TimerCount(static_cast<Timer_t>(0));
 }// namespace event
 
-#endif //KYROSWEBSERVER_TIMER_H
+#endif //KHPNL_TIMER_H

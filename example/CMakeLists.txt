@@ -15,9 +15,6 @@ target_link_libraries(threadpool_test base)
 add_executable(echoserver_test echoserver_test.cpp)
 target_link_libraries(echoserver_test base net)
 
-add_executable(httpserver_test httpserver_test.cpp)
-target_link_libraries(httpserver_test base net)
-
 add_executable(eventloop_test eventloop_test.cpp)
 target_link_libraries(eventloop_test base event)
 
@@ -29,3 +26,6 @@ target_link_libraries(loopthread_test base event)
 
 add_executable(LoopThreadPool_test LoopThreadPool_test.cpp)
 target_link_libraries(LoopThreadPool_test base event)
+
+add_executable(tcpserver_test tcpserver_test.cpp)
+target_link_libraries(tcpserver_test net)

@@ -22,29 +22,29 @@ HttpResponse::HttpResponse(STATUS_CODE StateCode)
     ContentLength=0;
 }
 
-void HttpResponse::appendToBuffer(FixedBuffer &Buffer) {
+void HttpResponse::appendToBuffer(FixedBuffer *Buffer) {
     char buf[128];
     /* 注意：snprintf()函数的返回值是“要写入的字符串长度(不包括字符串结尾的'\0')，”
      * 不管buf是否能装下这个字符串。*/
     snprintf(buf, sizeof buf, "HTTP/1.1 %d %s\r\n", mStatusCode, kStatusMessage.at(mStatusCode));
-    Buffer.append(buf);
+    Buffer->append(buf);
 
     if(isAlive){
-        Buffer.append("Connection:keep-isAlive\r\n");
+        Buffer->append("Connection:keep-isAlive\r\n");
     }else{
-        Buffer.append("Connection:closed\r\n");
+        Buffer->append("Connection:closed\r\n");
     }
 
     snprintf(buf, sizeof buf, "%s:%d\r\n", "Content-Length", ContentLength);
-    Buffer.append(buf);
+    Buffer->append(buf);
 
     for(auto _pair:Headers){
         snprintf(buf, sizeof buf, "%s:%s\r\n", _pair.first.c_str(), _pair.second.c_str());
-        Buffer.append(buf);
+        Buffer->append(buf);
     }
-    Buffer.append("\r\n");
+    Buffer->append("\r\n");
     if(Body != ""){
-        Buffer.append(Body);
+        Buffer->append(Body);
     }
 }
 

@@ -18,9 +18,10 @@ Channel::Channel(int fd, EventLoop *loop)
     mFd = fd;
     mLoop = loop;
     assert(mLoop!= nullptr);
-    loop->AddChannel(this);
+//    loop->AddChannel(this);
     isInLoop= true;
     isHandling = false;
+    isGuarded = false;
 }
 
 Channel::~Channel()
@@ -30,6 +31,19 @@ Channel::~Channel()
 }
 
 void Channel::HandleEvent()
+{
+    if (isGuarded){
+        // 延长mGuardPtr指向的底层对象的生命期，确保执行回调函数时不会被析构
+        shared_ptr<void> sp = mGuardPtr.lock();
+        if(sp){
+            HandleEventWithGuard();
+        }
+    }else{
+        HandleEventWithGuard();
+    }
+}
+
+void Channel::HandleEventWithGuard()
 {
     isHandling = true;
 
@@ -59,6 +73,18 @@ void Channel::Remove()
     assert(!isHandling);
     mLoop->DeleteChannel(this);
     isInLoop = false;
+}
+
+void Channel::Guard(const shared_ptr<void> &sp)
+{
+    mGuardPtr=sp;
+    isGuarded= true;
+}
+
+void Channel::UnGuard()
+{
+    mGuardPtr.reset();
+    isGuarded= false;
 }
 
 void Channel::EnableRead()

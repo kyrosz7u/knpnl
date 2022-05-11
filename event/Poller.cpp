@@ -3,6 +3,8 @@
 //
 
 #include "Poller.h"
+#include "EventLoop.h"
+#include "Channel.h"
 #include "Types.h"
 #include "base/Logger.h"
 #include <cstring>
@@ -10,6 +12,18 @@
 
 using namespace base;
 using namespace event;
+
+Poller::Poller(EventLoop* loop)
+:mLoop(loop)
+{
+    mEpollFd=epoll_create(5);
+    eventList.resize(MAX_EVENT_NUM);
+}
+
+Poller::~Poller()
+{
+    close(mEpollFd);
+}
 
 void Poller::poll(ChannelList *ActiveChannels) {
     size_t sz=eventList.size();

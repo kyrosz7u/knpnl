@@ -2,8 +2,8 @@
 // Created by 樱吹雪 on 2022/4/7.
 //
 
-#ifndef KYROSWEBSERVER_LOGGER_H
-#define KYROSWEBSERVER_LOGGER_H
+#ifndef KHPNL_LOGGER_H
+#define KHPNL_LOGGER_H
 
 // fwrite()是原子操作
 // 需要一个用户态的buffer 保存log的文本内容，并且一次性的刷入fd
@@ -56,4 +56,4 @@ private:
     LogStream mStream;
 };
 }//namespace base
-#endif //KYROSWEBSERVER_LOGGER_H
+#endif //KHPNL_LOGGER_H

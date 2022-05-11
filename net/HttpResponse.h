@@ -2,8 +2,8 @@
 // Created by 樱吹雪 on 2022/4/24.
 //
 
-#ifndef KYROSWEBSERVER_HTTPRESPONSE_H
-#define KYROSWEBSERVER_HTTPRESPONSE_H
+#ifndef KHPNL_HTTPRESPONSE_H
+#define KHPNL_HTTPRESPONSE_H
 
 #include "base/Copyable.h"
 #include "base/StringPiece.h"
@@ -47,7 +47,7 @@ public:
     FileSystem::FILE_STATE openFile(const StringPiece &path);
     bool hasFile(){ return !(mFile.getAddr() == nullptr); }
     FileSystem& getFile(){ return mFile; }
-    void appendToBuffer(FixedBuffer &Buffer);
+    void appendToBuffer(FixedBuffer *Buffer);
 
 public:
     std::map<string, string> Headers;
@@ -57,9 +57,11 @@ public:
 private:
     STATUS_CODE mStatusCode;
     FileSystem mFile;
+
+
 };
 
 }//namespace http
 }//namespace net
 
-#endif //KYROSWEBSERVER_HTTPRESPONSE_H
+#endif //KHPNL_HTTPRESPONSE_H
