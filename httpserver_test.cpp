@@ -24,7 +24,7 @@ void ServerHttp(const HttpRequest *req, HttpResponse &resp){
         if(ret!=IS_FILE)
             LOG_ERROR << ret;
         resp.setContentType("text/html");
-        resp.isAlive = false;
+//        resp.isAlive = false;
     }
 
 }

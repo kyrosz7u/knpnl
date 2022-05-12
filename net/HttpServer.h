@@ -18,8 +18,7 @@ namespace http {
 class HttpServer {
     typedef std::function<void(const HttpRequest *req, HttpResponse &resp)> HttpServeFunc;
 public:
-    //HttpServer默认起4个工作线程
-    HttpServer(int port, int work_nums=1);
+    HttpServer(int port, int work_nums=4);  //HttpServer默认起4个工作线程
     void ListenAndServe(HttpServeFunc f);
 private:
     EventLoop mLoop;
@@ -30,9 +29,11 @@ private:
 
     void connectedCb(const TcpConnPtr &conn);
 
-    void readCb(const TcpConnPtr &conn, FixedBuffer *readBuffer, FixedBuffer *writeBuffer);
+    void onMessageCallback(const TcpConnPtr &conn,
+                           FixedBuffer *readBuffer,
+                           FixedBuffer *writeBuffer);
 
-    void WriteCb(const TcpConnPtr &conn);
+    void WriteCompleteCallback(const TcpConnPtr &conn);
 };
 
 }//namespace http

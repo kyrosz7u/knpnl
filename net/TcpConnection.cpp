@@ -192,10 +192,10 @@ long int TcpConnection::sendMessage() {
             return mWriteBuffer.used() + m_iv[1].iov_len;
         }
         LOG_ERROR << "errno"<<sys_errlist[errno];
-//        LOG_ERROR<<"m_iv[0] addr: "<<m_iv[0].iov_base;
-//        LOG_ERROR<<"m_iv[0] len: "<<m_iv[0].iov_len;
-//        LOG_ERROR<<"m_iv[1] addr: "<<m_iv[1].iov_base;
-//        LOG_ERROR<<"m_iv[1] len: "<<m_iv[1].iov_len;
+        LOG_ERROR<<"m_iv[0] addr: "<<m_iv[0].iov_base;
+        LOG_ERROR<<"m_iv[0] len: "<<m_iv[0].iov_len;
+        LOG_ERROR<<"m_iv[1] addr: "<<m_iv[1].iov_base;
+        LOG_ERROR<<"m_iv[1] len: "<<m_iv[1].iov_len;
     }
     m_iv[1].iov_base= nullptr;
     m_iv[1].iov_len= 0;

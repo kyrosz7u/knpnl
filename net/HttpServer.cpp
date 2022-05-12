@@ -23,9 +23,9 @@ HttpServer::HttpServer(int port, int work_nums)
     mServer.SetOnConnectCallback(
             std::bind(&HttpServer::connectedCb, this, _1));
     mServer.SetOnMessageCallback(
-            std::bind(&HttpServer::readCb, this, _1,_2,_3));
+            std::bind(&HttpServer::onMessageCallback, this, _1, _2, _3));
     mServer.SetWriteCompleteCallback(
-            std::bind(&HttpServer::WriteCb, this, _1));
+            std::bind(&HttpServer::WriteCompleteCallback, this, _1));
 }
 
 void HttpServer::connectedCb(const TcpConnPtr &conn){
@@ -33,9 +33,9 @@ void HttpServer::connectedCb(const TcpConnPtr &conn){
     LOG_TRACE << "TcpServer::newConnection "<< conn->getSocketFd();
 };
 
-void HttpServer::readCb(const TcpConnPtr &conn,
-                        FixedBuffer *readBuffer,
-                        FixedBuffer *writeBuffer)
+void HttpServer::onMessageCallback(const TcpConnPtr &conn,
+                                   FixedBuffer *readBuffer,
+                                   FixedBuffer *writeBuffer)
 {
     /* 为什么是any_cast<HttpContext> */
     HttpContext *ctx=boost::any_cast<HttpContext>(conn->getMutableContext());
@@ -68,7 +68,7 @@ void HttpServer::readCb(const TcpConnPtr &conn,
     conn->Send();
 }
 //
-void HttpServer::WriteCb(const TcpConnPtr &conn){
+void HttpServer::WriteCompleteCallback(const TcpConnPtr &conn){
     if (!conn->GetAlive()) {
         mServer.Close(conn);
     }

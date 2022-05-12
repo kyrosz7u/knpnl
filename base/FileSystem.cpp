@@ -3,6 +3,7 @@
 //
 
 #include "FileSystem.h"
+#include "Logger.h"
 #include <memory>
 
 using namespace base;
@@ -30,6 +31,10 @@ FILE_STATE FileSystem::Open(const StringPiece &path){
     mFileLength = mFileStat.st_size;
 
     int fd = open(mPath.data(), O_RDONLY);
+    if(fd<0){
+        LOG_ERROR << "errno"<<sys_errlist[errno];
+        return CANNOT_ACCESS;
+    }
     mFile = shared_ptr<FileAddr>(new FileAddr(fd, mFileLength));
     close(fd);
     return IS_FILE;

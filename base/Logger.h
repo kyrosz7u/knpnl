@@ -28,7 +28,7 @@ public:
     //const char (&s)[N]定义了以个指向字符串的常量引用
     FileName(const char (&s)[N])
     :mName(s){}
-    constexpr const char* get(){
+    constexpr const char* get() const{
         const char *ret = strrchr(mName, '/');
         if(ret){
             return ret+1;

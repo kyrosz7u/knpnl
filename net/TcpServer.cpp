@@ -42,12 +42,14 @@ void TcpServer::Close(const TcpConnPtr &conn)
 {
     int connfd = conn->getSocketFd();
     auto it=connMap.find(connfd);
-    assert(it!=connMap.end());
-
-    EventLoop *ioLoop = conn->getLoop();
-    LOG_TRACE << "close connection: " << connfd;
-    ioLoop->QueueInLoop(std::bind(&TcpConnection::handleClose, conn));
-    LOG_TRACE << "conn use count: " << conn.use_count();
+//    assert(it!=connMap.end());
+    if(it!=connMap.end())
+    {
+        EventLoop *ioLoop = conn->getLoop();
+        LOG_TRACE << "close connection: " << connfd;
+        ioLoop->QueueInLoop(std::bind(&TcpConnection::handleClose, conn));
+        LOG_TRACE << "conn use count: " << conn.use_count();
+    }
 }
 
 void TcpServer::newConnection(int connfd, sockaddr_in addr)

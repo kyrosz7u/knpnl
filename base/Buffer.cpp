@@ -3,6 +3,7 @@
 //
 
 #include "Buffer.h"
+#include "Logger.h"
 #include <sys/socket.h>
 
 namespace base {
@@ -70,6 +71,7 @@ long int FixedBuffer::readFd(int socketfd)
             if(errno==EAGAIN||errno==EWOULDBLOCK){
                 break;
             }else {
+                LOG_ERROR << "errno"<<sys_errlist[errno];
                 return -1;
             }
             //连接被远程关闭

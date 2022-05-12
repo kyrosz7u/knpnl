@@ -53,10 +53,10 @@ void Acceptor::handlerRead()
                 close(connfd);
             }
         }else{
-            if (errno == EAGAIN) {
-                break;
+            if (errno != EAGAIN) {
+                LOG_ERROR << "errno"<<sys_errlist[errno];
             }
-            LOG_ERROR << "Acceptor::handlerRead connfd < 0";
+            break;
         }
     }
 }
