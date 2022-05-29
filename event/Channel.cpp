@@ -55,7 +55,7 @@ void Channel::HandleEventWithGuard()
         if(closeCallback) closeCallback();
     }else if(rEvent&EPOLLERR)
     {
-        LOG_ERROR<<"fd = " << mFd << " Channel::HandleEvent() ERROR";
+        LOG_ERROR<<"fd = " << mFd;
         if(errorCallback) errorCallback();
     }else if(rEvent&(EPOLLRDHUP|EPOLLPRI|EPOLLIN))
     {

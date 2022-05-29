@@ -4,9 +4,8 @@
 
 #include "HttpServer.h"
 #include "HttpContext.h"
-#include "TcpConnection.h"
+#include "net/TcpConnection.h"
 #include "base/Logger.h"
-#include <cstring>
 #include <functional>
 
 using namespace net;

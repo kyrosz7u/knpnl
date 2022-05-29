@@ -29,7 +29,7 @@ gtest==1.10
 
 <img src="README.assets/testresult(4t).png" alt="testresult(4t)" style="zoom: 45%;" />
 
-每秒请求数：10209，每分钟请求页面：612540
+每秒请求数：10209，每分钟请求页面：612540。
 
 ## 参考
 

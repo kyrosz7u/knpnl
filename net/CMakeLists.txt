@@ -1,5 +1,7 @@
 add_library(net Socket.cpp TcpConnection.cpp Acceptor.cpp TcpServer.cpp)
-add_library(http HttpServer.cpp HttpRequest.cpp HttpResponse.cpp HttpContext.cpp)
+
+add_subdirectory(http)
+
 target_link_libraries(net event base)
 target_link_libraries(http net)
 

@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 
-#include "net/HttpResponse.h"
+#include "net/http/HttpResponse.h"
 #include "base/Logger.h"
 #include "base/Buffer.h"
 
@@ -13,12 +13,12 @@ using namespace base;
 using namespace net::http;
 
 char httpResponse0[]="HTTP/1.1 200 OK\r\n"
-                    "Connection: keep-isAlive\r\n"
-                    "Content-Length: 10\r\n"
-                    "Accept-Ranges: bytes\r\n"
-                    "Cache-Control: no-cache\r\n"
-                    "Content-Type: text/html\r\n"
-                    "Date: Mon, 25 Apr 2022 08:35:51 GMT\r\n\r\n"
+                    "Connection:keep-isAlive\r\n"
+                    "Content-Length:10\r\n"
+                    "Accept-Ranges:bytes\r\n"
+                    "Cache-Control:no-cache\r\n"
+                    "Content-Type:text/html\r\n"
+                    "Date:Mon, 25 Apr 2022 08:35:51 GMT\r\n\r\n"
                     "1234567890";
 
 /*模拟构建http响应*/
@@ -33,7 +33,7 @@ TEST(HttpTest, RequestWithBody){
     resp.setContentType("text/html");
     resp.setHeader("Date","Mon, 25 Apr 2022 08:35:51 GMT");
     resp.setBody("1234567890");
-    resp.appendToBuffer(buf);
+    resp.appendToBuffer(&buf);
 
     string str1;
     string str2;

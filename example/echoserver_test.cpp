@@ -1,27 +1,24 @@
 //
-// Created by 樱吹雪 on 2022/4/5.
+// Created by 樱吹雪 on 2022/5/10.
 //
+#include "net/TcpServer.h"
 
-#include "net/Server.h"
-#include "base/LogStream.h"
-
-using namespace std;
 using namespace net;
 
-void cb(ConnPtr & c);
+void cb(const TcpConnPtr &c, FixedBuffer *buf, FixedBuffer *wbuf);
 
 int main()
 {
-    Server s(23333,4);
-
-    s.setReadCallBack(cb);
-    s.EventLoop();
-    return 0;
+    EventLoop loop;
+    TcpServer s(1234,4,&loop);
+    s.SetOnMessageCallback(cb);
+    s.Start();
+    loop.Loop();
 }
 
-void cb(ConnPtr& c){
-    char buf[128];
-    int n=c->Read(buf,128);
-    c->Write(buf, n);
-    c->enableConnWrite();
+
+void cb(const TcpConnPtr& c, FixedBuffer *rbuf, FixedBuffer *wbuf){
+    wbuf->append(rbuf->readPtr(), rbuf->used());
+    rbuf->readPtrMove(rbuf->used());
+    c->Send();
 }
